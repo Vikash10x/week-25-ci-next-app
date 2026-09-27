@@ -18,6 +18,12 @@ coverage
 # Turbo
 .turbo
 
+.agents/
+packages/prisma/.claude/
+packages/prisma/.cursor/
+packages/prisma/.devin/
+packages/prisma/.agents/
+
 # Vercel
 .vercel
 

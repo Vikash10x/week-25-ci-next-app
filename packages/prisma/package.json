@@ -1,0 +1,22 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "@prisma/orm-postgres": "8.0.0-rc.12",
+    "@repo/typescript-config": "workspace:*",
+    "dotenv": "^18.0.4",
+    "prisma": "8.0.0-rc.17"
+  },
+  "license": "ISC",
+  "type": "commonjs",
+  "scripts": {
+    "postinstall": "prisma skills sync || exit 0"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15"
+  }
+}
