@@ -1,21 +1,27 @@
 import express from "express";
 import { connectDb, db } from "@repo/db";
 
-
 const app = express();
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hii their");
-})
+app.get("/", (_req, res) => {
+    res.send("Hi there");
+});
 
 app.post("/signup", async (req, res) => {
-    console.log(req.headers["content-type"]);
-    console.log(req.body);
     const { username, password } = req.body ?? {};
+
     if (typeof username !== "string" || typeof password !== "string") {
         res.status(400).json({
             message: "Expected a JSON body with string username and password"
+        });
+        return;
+    }
+
+    const normalizedUsername = username.trim();
+    if (normalizedUsername.length < 3 || password.length < 6) {
+        res.status(400).json({
+            message: "Username must be at least 3 characters and password at least 6 characters"
         });
         return;
     }
@@ -26,20 +32,27 @@ app.post("/signup", async (req, res) => {
         return;
     }
 
-    const user = await userModel.create({
-        username: username,
-        password: password
-    });
-    res.json({
-        message: "Signup Successful",
-        id: user.id
-    })
-})
+    try {
+        const user = await userModel.create({
+            username: normalizedUsername,
+            password: password
+        });
 
+        res.status(201).json({
+            message: "Signup successful",
+            id: user.id
+        });
+    } catch (error) {
+        console.error("Signup failed:", error);
+        res.status(500).json({ message: "Signup failed. Please try again." });
+    }
+});
 
 async function start() {
     await connectDb();
-    app.listen(3002);
+    app.listen(3002, () => {
+        console.log("HTTP server listening on port 3002");
+    });
 }
 
 start().catch((error) => {
