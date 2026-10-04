@@ -2,7 +2,14 @@
   "name": "@repo/db",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "keywords": [],
   "author": "",
   "dependencies": {
@@ -12,8 +19,9 @@
     "prisma": "8.0.0-rc.17"
   },
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "postinstall": "prisma skills sync || exit 0"
   },
   "devDependencies": {
