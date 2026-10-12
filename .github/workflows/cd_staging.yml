@@ -24,7 +24,6 @@ jobs:
             git pull
             pnpm install
             pnpm run build
-            pm2 restart fe-server || true
-            pm2 restart http-server || true
-            pm2 restart ws-server || true
+            pm2 restart fe-server || (cd apps/web && pm2 start pnpm --name fe-server -- start)
+            pm2 save
           EOF
