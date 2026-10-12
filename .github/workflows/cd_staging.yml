@@ -18,12 +18,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@13.63.62.29 << 'EOF'
-            cd ~/week-25-ci-next-app
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@13.63.62.29 << 'EOF'
+            cd ~/week-25-ci-next-app 
             git pull
             pnpm install
             pnpm run build
             pm2 restart fe-server
             pm2 restart http-server
             pm2 restart ws-server
-          EOF
+          EOF   
